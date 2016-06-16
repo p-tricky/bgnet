@@ -18,6 +18,7 @@ class Controller(object):
         num_points = str(num_points)
         self.gnubg.command('set player 0 human')
         self.gnubg.command('set player 1 human')
+        self.gnubg.command('set display off')
         self.gnubg.command('save settings')
         self.gnubg.command('new match ' + num_points)
 
@@ -58,7 +59,6 @@ class Controller(object):
         while i < n and self.gnubg.posinfo()['gamestate'] != 2:
             moves_ = self._get_moves()
             self._move(moves_[random.randint(0, (len(moves_)-1))])
-            self._roll()
             i += 1
 
     def _move(self, move_):
