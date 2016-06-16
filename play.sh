@@ -1,5 +1,5 @@
 #!/bin/sh
 
-export PYTHONPATH=$PYTHONPATH:/Users/patrickloftus/Dropbox/MachineLearning/trenary/gammon
+export PYTHONPATH=$PYTHONPATH:$(dirname "$0")
 gnubg -q -t -p ./main.py
 
