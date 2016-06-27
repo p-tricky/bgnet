@@ -1,0 +1,134 @@
+\documentclass{article}
+\usepackage{array}
+\usepackage{booktabs}
+\setlength{\heavyrulewidth}{1.5pt}
+\setlength{\abovetopsep}{4pt}
+\usepackage{graphicx}
+\usepackage{media9}
+\usepackage{listings}
+\usepackage{float}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{animate}
+\usepackage{verbatim}
+\usepackage[utf8]{inputenc}
+
+\lstset{
+  language=python, 
+  basicstyle=\ttfamily, 
+  keywordstyle=\color{blue}\ttfamily, 
+  stringstyle=\color{red}\ttfamily, 
+  commentstyle=\color{green}\ttfamily,
+  numbers=left, 
+  morecomment=[l][\color{magenta}]{\#}
+  showspaces=false,                
+  showstringspaces=false,
+  showtabs=false,                  
+  tabsize=2
+}
+
+\newcommand{\banner}[5]{
+  \begin{centering}
+    \framebox{\parbox{0.98\textwidth}{
+      \begin{centering}
+        \medskip{\Huge #1}\bigskip\\#2\medskip\\#3\medskip\\#4\medskip\\#5\medskip\par
+      \end{centering}
+    }}\par
+  \end{centering}
+  \newpage}
+ 
+\begin{document}
+
+\banner{Temporal Difference learning in Backgammon}{Monday, June 27}
+{Neural Nets, Summer I 2016}{Justin Beach}{Patrick Loftus}
+
+\tableofcontents
+
+\addcontentsline{toc}{section}{Description of Experiment}
+\section*{Description of Experiment}
+  
+We used the temporal difference learning algorithm to train a neural network to
+evaluate backgammon positions.  
+
+A backgammon board consists of 24 points and the
+bar. Following Tesauro's design choices, we designed a network with 198 inputs
+and 50 hidden nodes.  We assigned 8 inputs in our neural
+network to each of the 24 points.  The first 3 checkers on any point get their
+own input.  The remaining checkers are summed halved and assigned to the 4th
+input.  There are 4 inputs for each player.  Thus, 8 white checkers on a point
+would generate 1 1 1 2.5 0 0 0 0 as its corresponding inputs.  Likewise, 2 black
+black checkers would yield 0 0 0 0 1 1 0 0. Of the remaining 6 inputs, 2
+represented the player on roll; 2, the number of checkers on the bar; and 2, the 
+number of checkers that had been cleared.
+
+After training our network on nearly 15000 games, we pitted the trained network
+against an untrained network to quantify the success of the training routine.
+
+\addcontentsline{toc}{section}{Data}
+  \section*{Data}
+
+    Table~\ref{resultsTable} shows the number of wins for the trained and
+    untrained players in 5 100 game series.   Table~\ref{statsTable} provides 
+    statistical insights into the series' results.
+
+\begin{table}[!htb]
+  \begin{center}
+  \caption{Number of wins for trained and untrained Neural networks.}
+  \label{resultsTable}
+  \begin{tabular}{lrr}
+    \toprule
+    \midrule
+    {} &    wins \\
+    \midrule
+    series &     untrained &  trained \\
+    \midrule
+    1 & 33       & 67 \\
+    2 & 40       & 60 \\
+    3 & 43       & 57 \\
+    4 & 19       & 81 \\
+    5 & 44       & 56 \\
+    \midrule
+    \bottomrule
+  \end{tabular}
+  \end{center}
+\end{table}
+
+\begin{table}[!htb]
+  \begin{center}
+  \caption{Trained network win statistics.}
+  \label{statsTable}
+  \begin{tabular}{lr}
+    \toprule
+    {} &  trained win \% \\
+    \midrule
+    Mean &  64  \\
+    Std Error & 4.6 \\
+    95 \% C.I.& 51 - 77 \\
+    \bottomrule
+  \end{tabular}
+  \end{center}
+\end{table}
+
+
+\addcontentsline{toc}{section}{Results}
+  \section*{Results}                                
+
+  
+  The results are a bit disappointing.  We can only be 95\% confident that the
+  trained network actually out performs the untrained network.  Furthermore,
+  we are 95\% certain that the trained network will win fewer than 80\% of its
+  games against the untrained network.  
+
+  A potential cause of the poor performance is the small training set.  Although
+  15,000 matches sounds like a lot, previous implementations suggest that
+  the network continues to improve for the first 100,000 games.  Even at the
+  20,000 game mark performance is still improving quite rapidly.  Unfortunately
+  we didn't have time to play 100,000 training games with our network.
+  Moreover, we didn't have an opportunity to optimize our learning parameters.
+
+  If given more time, we would have implemented the backgammon game engine
+  in python.  The external game engine that we used forced us to perform time consuming I/O
+  operations after each turn.  Because of this, we didn't have time to fully
+  train our network or to optimize learning parameters.
+  
+\end{document}

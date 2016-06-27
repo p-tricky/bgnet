@@ -74,9 +74,10 @@ class NeuralNet(object):
         return a1, z2, a2, z3, a3
 
     def save(self, folder):
-        path = os.getcwd() + "/" + folder
+        path = os.getcwd() + "/"
         if os.path.exists(folder):
             folder = folder + time.strftime("%c").replace(" ", "_")
+        path += folder
         os.makedirs(path)
         np.savetxt(path + "/w1.txt", self.w1)
         np.savetxt(path + "/w2.txt", self.w2)
@@ -84,8 +85,8 @@ class NeuralNet(object):
         np.savetxt(path + "/et2.txt", self._et2)
 
     def load(self, fname):
-        if fname[-1] != "/":
-            fname.append("/")
+        if fname[-1] != '/':
+            fname = fname + '/'
         self.w1 = np.loadtxt(fname + "w1.txt")
         self.w2 = np.loadtxt(fname + "w2.txt")
         self._et1 = np.loadtxt(fname + "et1.txt")
@@ -106,7 +107,7 @@ class NeuralNet(object):
 
     def _add_bias_unit(self, X, how='col'):
         if (isinstance(X, list)):
-            X = np.asarray(X)
+            X = np.array(X)
         if len(X.shape) == 1:
             X = X.reshape(1, X.shape[0])
         if how == 'col':
